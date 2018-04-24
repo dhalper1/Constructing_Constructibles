@@ -1,4 +1,4 @@
-input_val = "(+ 2 (/ 1 sqrt(3))"
+input_val = "(+ 2 (/ 1 sqrt(3)))"
 
 
 class Leaf:
@@ -31,6 +31,7 @@ class Tree:
         self.operator_set = ["+", "/", "-", "*"]
         self.input = input
         self.root = self._parse(self.input)
+
 
     def _find_substr(self, str, start):
         i = start
@@ -70,4 +71,95 @@ class Tree:
 
 
 
+def is_valid(input_val):
+    print(check_parens(input_val))
+    print(check_legal_characters(input_val))
+    print(check_infix(input_val))
+    return check_parens(input_val) and check_legal_characters(input_val) and check_infix(input_val) #and check_spacing(input_val)
+
+# def check_spacing(input_val):
+#     last_space = True
+#     for i in range(len(input_val)):
+#         if input_val[i] != " ":
+#             if not last_space:
+#                 return False
+#             last_space = False
+#         else:
+#             last_space = True
+
+def check_legal_characters(input_val):
+    legal_set = ["+", "-", "*", "/", "(", " ", ")", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    # i = 0
+    for i in range(len(input_val)):
+        char = input_val[i]
+        # if not (i + 4 < len(input_val) and input_val[i:].startswith("sqrt")) and char not in legal_set:
+        #     return False
+        if not (char in legal_set):
+            if not (input_val[i:].startswith("sqrt") or input_val[i:].startswith("qrt") or
+                    input_val[i:].startswith("rt") or input_val[i:].startswith("t")):
+                return False
+
+    return True
+
+def check_infix(input_val):
+    for i in range(len(input_val)):
+        operator_set = ["+", "-", "*", "/"]
+        char = input_val[i]
+        if char == "(" and i != len(input_val) - 1:
+            if i < len(input_val):
+                if input_val[i + 1] not in operator_set:
+                    return False
+            elif i >= 3:
+                if not input_val[i - 4:].startswith("sqrt"):
+                    return False
+            else:
+                return False
+
+        return True
+
+
+# def check_parens(input_val):
+#     # string = input_val[:] # Copying
+#     # left_most_parens_ind = -1
+#     left_parens = 0
+#     i = 0
+#     while i < len(input_val) and input_val[i] != ")":
+#         char = input_val[i]
+#         if char == "(":
+#             left_parens += 1
+#             # left_most_parens_ind = i
+#         i += 1
+#
+#     if input_val[i] != ")":
+#         return False
+#     right_parens = 0
+#     while i < len(input_val):
+#         char = input_val[i]
+#         if char == "(":
+#             return False
+#         if char == ")":
+#             right_parens += 1
+#         i += 1
+#
+#     return right_parens == left_parens
+
+def check_parens(input_val):
+    counter = 0
+    for char in input_val:
+        if char == "(":
+            counter += 1
+        elif char == ")":
+            counter -= 1
+
+        if counter < 0:
+            return False
+
+    return counter == 0
+
+
+
+
+
 print(Tree(input_val).root)
+
+print(is_valid(input_val))
