@@ -1,4 +1,19 @@
 /******************************************************************************/
+/**************************** CODES AND CONSTANTS *****************************/
+/******************************************************************************/
+
+const default_x_scale = 10.0
+const default_y_scale = 10.0
+const default_x_offset = 0.0
+const default_y_offset = 0.0
+
+/******************************************************************************/
+/************************** END CODES AND CONSTANTS ***************************/
+/******************************************************************************/
+
+
+
+/******************************************************************************/
 /*************************** COORDINATE TRANSFORM *****************************/
 /******************************************************************************/
 
@@ -6,10 +21,10 @@
 // coordinate system. This means we'll need a scale, an x offset, and a
 // y offset.
 
-x_scale = 10.0      // scaling factor for x
-y_scale = 10.0      // scaling factor for y
-x_offset = 0.0      // offset for x---may be unnecessary
-y_offset = 0.0      // offset for y---may be unnecessary
+x_scale = default_x_scale       // scaling factor for x
+y_scale = default_y_scale       // scaling factor for y
+x_offset = default_x_offset     // offset for x
+y_offset = default_y_offset     // offset for y
 
 // Transform a coordinate on the plane x-axis to a coordinate on the window
 // x-axis.
@@ -67,6 +82,15 @@ function update_scale(x, y) {
     x_scale = y_scale
     redraw = true
   }
+}
+
+// Resets the coordinate transform to default.
+// @return: nothing.
+function reset_transform_to_default() {
+  x_scale = default_x_scale
+  y_scale = default_y_scale
+  x_offset = default_x_offset
+  y_offset = default_y_offset
 }
 
 /******************************************************************************/
