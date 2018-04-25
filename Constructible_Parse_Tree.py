@@ -1,5 +1,5 @@
-input_val = "(+ 2 (/ 1 sqrt(3)))"
-
+input_val = " (+ 2 (/ 1 sqrt(3)))"
+butts = "david_test yo"
 
 class Leaf:
     def __init__(self, num):
@@ -23,8 +23,9 @@ class Operation:
 
     def __str__(self):
         if self.operator == "sqrt":
-            return "(sqrt (" + str(self.l_child) + ")"
-        return "(" + self.operator + " (" + str(self.l_child) + ", " + str(self.r_child) + "))"
+            return "sqrt(" + str(self.l_child) + ")"
+        return "(" + self.operator + " " + str(self.l_child) + " " + str(self.r_child) + ")"
+
 
 class Tree:
     def __init__(self, input):
@@ -32,12 +33,13 @@ class Tree:
         self.input = input
         self.root = self._parse(self.input)
 
-
     def _find_substr(self, str, start):
         i = start
-        if str[start] == "(":
+        str = str[0:start] + str[start:].lstrip(" ")
+        print(str[start])
+        if str[start] == "(" or str[start:].startswith("sqrt"):
             counter = 0
-            i = 2
+            # i = 2
             while str[i] != ")":
                 counter += int(str[i] == "(")
                 i += 1
@@ -45,6 +47,7 @@ class Tree:
                 counter -= int(str[i] == ")")
                 i += 1
             return str[start:i], i
+
         # elif str[start] == ")":
         #     return None, i
         else:
@@ -70,12 +73,10 @@ class Tree:
         return str(self.root)
 
 
-
 def is_valid(input_val):
-    print(check_parens(input_val))
-    print(check_legal_characters(input_val))
-    print(check_infix(input_val))
-    return check_parens(input_val) and check_legal_characters(input_val) and check_infix(input_val) #and check_spacing(input_val)
+    return check_parens(input_val) and check_legal_characters(input_val) and check_infix(
+        input_val)  # and check_spacing(input_val)
+
 
 # def check_spacing(input_val):
 #     last_space = True
@@ -100,6 +101,7 @@ def check_legal_characters(input_val):
                 return False
 
     return True
+
 
 def check_infix(input_val):
     for i in range(len(input_val)):
@@ -157,9 +159,4 @@ def check_parens(input_val):
     return counter == 0
 
 
-
-
-
 print(Tree(input_val).root)
-
-print(is_valid(input_val))
