@@ -8,11 +8,11 @@ input_val = "(+ 2 (/ 1 sqrt(3)))"
 // }
 
 class Operation {
-	constructor(operator, l_child, r_child, is_leaf) {
+	constructor(operator, l_child, r_child) {
 		this.operator = operator  // String representing the operator
 		this.l_child = l_child
 		this.r_child = r_child
-		this.is_leaf = is_leaf
+		this.is_leaf = l_child == null && r_child == null
 	}
 }
 
@@ -77,15 +77,15 @@ class Tree {
 			var right_to_parse = right_sub[0]
 			i = right_sub[1]
 
-			return new Operation(input[1], parse(left_to_parse), parse(right_to_parse), false)
+			return new Operation(input[1], parse(left_to_parse), parse(right_to_parse))
 		} else if input.startsWith("sqrt(") {
 			if this.operator_set.includes(input[5]) {
-				return new Operation("sqrt", new Operation(parseInt(input[5]), null, false))
+				return new Operation("sqrt", new Operation(parseInt(input[5]), null))
 			} else {
-				return new Operation("sqrt", parse(input[4]), null, false)
+				return new Operation("sqrt", parse(input[4]), null)
 			}
 		} else if str != "" {
-			return new Operation(parseInt(input[0]), null, null, true)
+			return new Operation(parseInt(input[0]), null, null)
 		}
 	}
 }
