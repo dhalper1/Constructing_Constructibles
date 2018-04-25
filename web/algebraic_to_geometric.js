@@ -2,7 +2,6 @@
 /*************************** ALGEBRAIC TO GEOMETRIC ***************************/
 /******************************************************************************/
 
-
 /*
  * Takes a parse tree (as specified in constructible_parse_tree.js) and
  * converts it to a sequence of drawing instructions (as specified in the
