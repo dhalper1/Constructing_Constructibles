@@ -89,3 +89,11 @@ class Tree {
 		}
 	}
 }
+
+function is_valid(input_val) {
+	return check_parens(input_val) && check_legal_characters(input_val) && 
+			check_infix(input_val);
+}
+
+
+
