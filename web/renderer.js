@@ -97,7 +97,6 @@ function draw() {
 }
 
 function draw_entire_scene() {
-  console.log(current_step)
   // redraw the background
   background(60, 60, 80)
 
