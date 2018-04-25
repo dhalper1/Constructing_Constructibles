@@ -21,28 +21,14 @@
 
 function main(query) {
   parse_tree = new Tree(query)
-  console.log(parse_tree)
-  // steps = parse_tree_to_geometric(parse_tree)
-  steps = []
-  reset_renderer(steps)
-  setTimeout(function() {
-    reset_renderer([{
-      type: CIRCLE,
-      x0: 0,
-      y0: 0,
-      r: 5,
-      x_int: 4,
-      y_int: -2,
-      amount_to_draw: amount_to_draw_init
-    },
-    {
-      type: LINE,
-      m: 0.2,
-      b: 3,
-      x_int: 8,
-      y_int: 9,
-      amount_to_draw: amount_to_draw_init
-    }])}, 100)
+  if (parse_tree == null) {
+    document.getElementById('searchbar').value = "Invalid Input"
+  } else {
+    console.log(parse_tree)
+    // steps = parse_tree_to_geometric(parse_tree)
+    new_steps = test_steps()
+    reset_renderer(new_steps)
+  }
 }
 
 /******************************************************************************/
