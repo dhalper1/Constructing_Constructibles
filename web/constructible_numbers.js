@@ -4,9 +4,11 @@
 
 const CIRCLE = 0          // Step is a circle.
 const LINE = 1            // Step is a line.
+const POINT = 2           // Step is a point.
 
 const amount_to_draw_init = 0.01;
-const intersection_size = 5;
+const intersection_size = 4;
+const point_size = 6;
 
 /******************************************************************************/
 /************************** END CODES AND CONSTANTS ***************************/
@@ -145,6 +147,12 @@ steps = [
     x_int: 20,
     y_int: 2,
     amount_to_draw: amount_to_draw_init
+  },
+  {
+    type: POINT,
+    x: 300,
+    y: 200,
+    amount_to_draw: amount_to_draw_init
   }
 ]
 
@@ -185,13 +193,19 @@ function draw() {
                   x_scale * steps[current_step].r * 2,
                   y_scale * steps[current_step].r * 2,
                   0, steps[current_step].amount_to_draw * 2 * PI)
-    } else {
+    } else if (steps[current_step].type == LINE) {
       stroke(130, 240, 180)
       line(0, trans_y(steps[current_step].m * inv_trans_x(0) + steps[current_step].b),
             width * steps[current_step].amount_to_draw,
             trans_y(steps[current_step].m
                       * inv_trans_x(width * steps[current_step].amount_to_draw)
                       + steps[current_step].b))
+    } else if (steps[current_step].type == POINT) {
+      stroke(130, 240, 180)
+      fill(130, 240, 180)
+      arc(trans_x(steps[current_step].x), trans_y(steps[current_step].y),
+                  point_size, point_size,
+                  0, steps[current_step].amount_to_draw * 2 * PI)
     }
     // We've just completed an additional portion of the step.
     steps[current_step].amount_to_draw += draw_speed
@@ -219,10 +233,15 @@ function draw_entire_scene() {
       stroke(130, 240, 180)
       ellipse(trans_x(step.x0), trans_y(step.y0),
                   x_scale * step.r * 2, y_scale * step.r * 2)
-    } else {
+    } else if (step.type == LINE) {
       stroke(130, 240, 180)
       line(0, trans_y(step.m * inv_trans_x(0) + step.b),
             width, trans_y(step.m * inv_trans_x(width) + step.b))
+    } else if (step.type == POINT) {
+      stroke(130, 240, 180)
+      fill(130, 240, 180)
+      ellipse(trans_x(step.x), trans_y(step.y),
+                  point_size, point_size)
     }
     fill(240, 20, 40)
     noStroke()
