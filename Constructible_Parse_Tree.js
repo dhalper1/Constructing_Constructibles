@@ -9,18 +9,18 @@ input_val = "(+ 2 (/ 1 sqrt(3)))"
 
 class Operation {
 	constructor(operator, l_child, r_child) {
-		this.operator = operator  // String representing the operator
-		this.l_child = l_child
-		this.r_child = r_child
+		this.operator = operator; // String representing the operator
+		this.l_child = l_child;
+		this.r_child = r_child;
 		this.is_leaf = l_child == null && r_child == null
 	}
 }
 
 class Tree {
 	constructor(input) {
-		this.operator_set = ["+", "/", "-", "*"]
-		this.input = input
-		this.root = parse(input)
+		this.operator_set = ["+", "/", "-", "*"];
+		this.input = input;
+		this.root = this.parse(input)
 	}
 
 	// find_substring(str, start) {
@@ -48,50 +48,62 @@ class Tree {
 
 	find_substring(str, start) {
 		var i = start
-		while (str[start] == " ") {
+		while (str[start] === " ") {
 			start += 1
 		}
-		if str[start] == "(" || str.substring(start, str.length).startsWith("sqrt") {
-			var counter = 0
-			while str[i] != ")" {
-				counter += str[i] == "(" ? 1 : 0
+		if ((str[start] === "(") || (str.substring(start, str.length).startsWith("sqrt"))) {
+			var counter = 0;
+			while (str[i] !== ")") {
+				counter += str[i] === "(" ? 1 : 0;
 				i += 1
 			}
-			while counter > 0 {
-				counter -= str[i] == ")" ? 1 : 0
+			while (counter > 0) {
+				counter -= str[i] === ")" ? 1 : 0;
 				i += 1
 			}
 			return [str.substring(start, i), i]
 		} else {
-			return str[start], i + 1
+			return [str[start], i + 1]
 		}
 	}
 
 	parse(input) {
-		input = input.trimLeft()
-		if input && input[0] == "(" && input.length >= 2 {
-			var left_sub = find_substring(str, 3)
-			var left_to_parse = left_sub[0]
-			var i = left_sub[1]
-			var right_sub = find_substring(str, i)
-			var right_to_parse = right_sub[0]
-			i = right_sub[1]
+		input = input.trim();
+		if ((input !== null) && (input[0] === "(") && (input.length >= 2)) {
+            const left_sub = this.find_substring(str, 3);
+            const left_to_parse = left_sub[0];
+            let i = left_sub[1];
+            const right_sub = this.find_substring(str, i);
+            const right_to_parse = right_sub[0];
+            i = right_sub[1];
 
-			return new Operation(input[1], parse(left_to_parse), parse(right_to_parse))
-		} else if input.startsWith("sqrt(") {
-			if this.operator_set.includes(input[5]) {
+			return new Operation(input[1], this.parse(left_to_parse), this.parse(right_to_parse))
+		} else if (input.startsWith("sqrt(")) {
+			if (this.operator_set.includes(input[5])) {
 				return new Operation("sqrt", new Operation(parseInt(input[5]), null))
 			} else {
-				return new Operation("sqrt", parse(input[4]), null)
+				return new Operation("sqrt", this.parse(input[4]), null)
 			}
-		} else if str != "" {
+		} else if (input !== "") {
 			return new Operation(parseInt(input[0]), null, null)
 		}
 	}
 }
 
 function is_valid(input_val) {
-	return check_parens(input_val) && check_legal_characters(input_val) && 
+    function check_parens(input_val) {
+		return false;
+    }
+
+    function check_legal_characters(input_val) {
+        return false;
+    }
+
+    function check_infix(input_val) {
+        return false;
+    }
+
+    return check_parens(input_val) && check_legal_characters(input_val) &&
 			check_infix(input_val);
 }
 
