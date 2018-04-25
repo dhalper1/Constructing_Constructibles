@@ -21,8 +21,9 @@
 
 function main(query) {
   parse_tree = new Tree(query)
-  if (parse_tree == null) {
-    document.getElementById('searchbar').value = "Invalid Input"
+  if (parse_tree.root == null) {
+    document.getElementById('searchbar').blur()
+    document.getElementById('searchbar').value = "invalid input!"
   } else {
     console.log(parse_tree)
     // steps = parse_tree_to_geometric(parse_tree)

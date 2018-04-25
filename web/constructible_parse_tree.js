@@ -23,7 +23,7 @@ class Tree {
 		// this.operator_set =
         this.operator_set = new Set(["+", "-", "*", "/"])
 		this.input = input;
-		this.root = Tree.is_valid(input) ? this.parse(input) : null
+		this.root = this.is_valid(input) ? this.parse(input) : null
 	}
 
 	// find_substring(str, start) {
@@ -118,8 +118,9 @@ class Tree {
         for (let i = 0; i < input_val.length; i++) {
             if (!legal_set.has(input_val[i])) {
                 let substr = input_val.substring(i, input_val.length);
+								// console.log(substr)
                 if (!(substr.startsWith("sqrt") || substr.startsWith("qrt") || substr.startsWith("rt") || substr.startsWith("t"))) {
-                    return false
+										return false
                 }
             }
         }
@@ -129,23 +130,25 @@ class Tree {
     _check_infix(input_val) {
         // return false;
         for (let i = 0; i < input_val.length - 1; i++) {
-            let char = input_val[i];
-            if (char === "(") {
-                if (i + 1 < input_val.length) {
-                    // if (!this.operator_set.has(input_val[i + 1])) {
-					if (!this.operator_set.has(input_val[i + 1])) {
-                        return false
-                    }
-                } else if (i >= 3) {
-                    if (!(input_val.substring(i - 4, i).startsWith("Sqrt"))) {
-                        return false
-                    }
-                } else {
-                    return false
-                }
-            }
-        }
-        return true
+          let char = input_val[i];
+          if (char === "(") {
+            if (i + 1 < input_val.length) {
+                // if (!this.operator_set.has(input_val[i + 1])) {
+							if (!this.operator_set.has(input_val[i + 1])) {
+								if (i >= 1 && input_val[i - 1] != 't') {
+			          	return false
+								}
+			        }
+			      } else if (i >= 3) {
+		            if (!(input_val.substring(i - 4, i).startsWith("sqrt"))) {
+		                return false
+		            }
+			      } else {
+			          return false
+			      }
+        	}
+	      }
+	      return true
     }
 
 }
