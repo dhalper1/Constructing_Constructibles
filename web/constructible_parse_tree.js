@@ -17,10 +17,13 @@ class Operation {
 }
 
 class Tree {
+    // static operator_set = ["+", "-", "*", "/"];
+    // static operator_set;
 	constructor(input) {
-		this.operator_set = ["+", "/", "-", "*"];
+		// this.operator_set =
+        this.operator_set = new Set(["+", "-", "*", "/"])
 		this.input = input;
-		this.root = this.is_valid(input) ? this.parse(input) : null
+		this.root = Tree.is_valid(input) ? this.parse(input) : null
 	}
 
 	// find_substring(str, start) {
@@ -46,14 +49,14 @@ class Tree {
 	// 	}
 	// }
 
-	find_substring(str, start) {
-		var i = start
-		while (str[start] === " ") {
+	static find_substring(str, start) {
+        let i = start;
+        while (str[start] === " ") {
 			start += 1
 		}
 		if ((str[start] === "(") || (str.substring(start, str.length).startsWith("sqrt"))) {
-			var counter = 0;
-			while (str[i] !== ")") {
+            let counter = 0;
+            while (str[i] !== ")") {
 				counter += str[i] === "(" ? 1 : 0;
 				i += 1
 			}
@@ -70,16 +73,16 @@ class Tree {
 	parse(input) {
 		input = input.trim();
 		if ((input !== null) && (input[0] === "(") && (input.length >= 2)) {
-            const left_sub = this.find_substring(input, 3);
+            const left_sub = Tree.find_substring(input, 3);
             const left_to_parse = left_sub[0];
             let i = left_sub[1];
-            const right_sub = this.find_substring(input, i);
+            const right_sub = Tree.find_substring(input, i);
             const right_to_parse = right_sub[0];
             i = right_sub[1];
 
 			return new Operation(input[1], this.parse(left_to_parse), this.parse(right_to_parse))
 		} else if (input.startsWith("sqrt(")) {
-			if (this.operator_set.includes(input[5])) {
+			if (this.operator_set.has(input[5])) {
 				return new Operation("sqrt", new Operation(parseInt(input[5]), null))
 			} else {
 				return new Operation("sqrt", this.parse(input[4]), null)
@@ -90,64 +93,61 @@ class Tree {
 	}
 
     is_valid(input_val) {
-        function check_parens(input_val) {
-            let counter = 0;
-            for (let i = 0; i < input_val.length; i++) {
-                if (input_val[i] === "(") {
-                    counter += 1
-                } else if (input_val[i] === ")") {
-                    counter -= 1
-                }
-                if (counter < 0) {
+        return this._check_parens(input_val) && this._check_legal_characters(input_val) &&
+            this._check_infix(input_val);
+    }
+
+    _check_parens(input_val) {
+        let counter = 0;
+        for (let i = 0; i < input_val.length; i++) {
+            if (input_val[i] === "(") {
+                counter += 1
+            } else if (input_val[i] === ")") {
+                counter -= 1
+            }
+            if (counter < 0) {
+                return false
+            }
+        }
+        return (counter === 0)
+    }
+
+    _check_legal_characters(input_val) {
+        // return false;
+        let legal_set = new Set(["+", "-", "*", "/", "(", " ", ")", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
+        for (let i = 0; i < input_val.length; i++) {
+            if (!legal_set.has(input_val[i])) {
+                let substr = input_val.substring(i, input_val.length);
+                if (!(substr.startsWith("sqrt") || substr.startsWith("qrt") || substr.startsWith("rt") || substr.startsWith("t"))) {
                     return false
                 }
             }
-            return (counter === 0)
         }
+        return true
+    }
 
-        function check_legal_characters(input_val) {
-            // return false;
-            let legal_set = ["+", "-", "*", "/", "(", " ", ")", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-            for (let i = 0; i < input_val.length; i++) {
-                if (!legal_set.includes(input_val[i])) {
-                    let substr = input_val.substring(i, input_val.length);
-                    if (!(substr.startsWith("sqrt") || substr.startsWith("qrt") || substr.startsWith("rt") || substr.startsWith("t"))) {
+    _check_infix(input_val) {
+        // return false;
+        for (let i = 0; i < input_val.length - 1; i++) {
+            let char = input_val[i];
+            if (char === "(") {
+                if (i + 1 < input_val.length) {
+                    // if (!this.operator_set.has(input_val[i + 1])) {
+					if (!this.operator_set.has(input_val[i + 1])) {
                         return false
                     }
+                } else if (i >= 3) {
+                    if (!(input_val.substring(i - 4, i).startsWith("Sqrt"))) {
+                        return false
+                    }
+                } else {
+                    return false
                 }
             }
-            return true
         }
-
-        function check_infix(input_val) {
-            // return false;
-            for (let i = 0; i < input_val.length - 1; i++) {
-				let char = input_val[i];
-				if (char === "(") {
-					if (i + 1 < input_val.length) {
-						if (!this.operator_set.includes(input_val[i + 1])) {
-							return false
-						}
-					} else if (i >= 3) {
-						if (!(input_val.substring(i - 4, i).startsWith("Sqrt"))) {
-							return false
-						}
-					} else {
-						return false
-					}
-				}
-            }
-            return true
-        }
-
-        return check_parens(input_val) && check_legal_characters(input_val) &&
-            check_infix(input_val);
+        return true
     }
 
 }
-
-
-
-console.log(is_valid(input_val))
 
 
