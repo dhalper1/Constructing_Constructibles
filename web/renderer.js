@@ -35,51 +35,51 @@ draw_speed = 0.02       // how fast to draw
 /******************************************************************************/
 
 // TEST. THESE DO NOT MAKE ANY SENSE. //
-steps = [
-  {
-    type: CIRCLE,
-    x0: 0,
-    y0: 0,
-    r: 5,
-    x_int: 4,
-    y_int: -2,
-    amount_to_draw: amount_to_draw_init
-  },
-  {
-    type: LINE,
-    m: 0.2,
-    b: 3,
-    x_int: 8,
-    y_int: 9,
-    amount_to_draw: amount_to_draw_init
-  },
-  {
-    type: CIRCLE,
-    x0: 8,
-    y0: -1,
-    r: 7,
-    x_int: 400,
-    y_int: 2,
-    amount_to_draw: amount_to_draw_init
-  },
-  {
-    type: CIRCLE,
-    x0: 300,
-    y0: 3,
-    r: 40,
-    x_int: 20,
-    y_int: 2,
-    amount_to_draw: amount_to_draw_init
-  },
-  {
-    type: POINT,
-    x: 300,
-    y: 200,
-    x_int: 20,
-    y_int: 2,
-    amount_to_draw: amount_to_draw_init
-  }
-]
+steps = []
+//   {
+//     type: CIRCLE,
+//     x0: 0,
+//     y0: 0,
+//     r: 5,
+//     x_int: 4,
+//     y_int: -2,
+//     amount_to_draw: amount_to_draw_init
+//   },
+//   {
+//     type: LINE,
+//     m: 0.2,
+//     b: 3,
+//     x_int: 8,
+//     y_int: 9,
+//     amount_to_draw: amount_to_draw_init
+//   },
+//   {
+//     type: CIRCLE,
+//     x0: 8,
+//     y0: -1,
+//     r: 7,
+//     x_int: 400,
+//     y_int: 2,
+//     amount_to_draw: amount_to_draw_init
+//   },
+//   {
+//     type: CIRCLE,
+//     x0: 300,
+//     y0: 3,
+//     r: 40,
+//     x_int: 20,
+//     y_int: 2,
+//     amount_to_draw: amount_to_draw_init
+//   },
+//   {
+//     type: POINT,
+//     x: 300,
+//     y: 200,
+//     x_int: 20,
+//     y_int: 2,
+//     amount_to_draw: amount_to_draw_init
+//   }
+// ]
 
 function setup() {
   // Get the window width and height.
@@ -174,6 +174,15 @@ function draw_entire_scene() {
               intersection_size, intersection_size)
   }
   redraw = false
+}
+
+function reset_renderer(new_steps) {
+  noLoop()
+  steps = new_steps
+  current_step = 0
+  reset_transform_to_default()
+  redraw = true
+  loop()
 }
 
 /******************************************************************************/
