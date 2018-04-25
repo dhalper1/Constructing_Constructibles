@@ -107,5 +107,6 @@ function is_valid(input_val) {
 			check_infix(input_val);
 }
 
+console.log(is_valid(input_val))
 
 
