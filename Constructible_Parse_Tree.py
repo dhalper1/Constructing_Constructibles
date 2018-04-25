@@ -39,7 +39,7 @@ class Tree:
         print(str[start])
         if str[start] == "(" or str[start:].startswith("sqrt"):
             counter = 0
-            i = 2
+            # i = 2
             while str[i] != ")":
                 counter += int(str[i] == "(")
                 i += 1
