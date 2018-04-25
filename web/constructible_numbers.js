@@ -6,9 +6,9 @@ const CIRCLE = 0          // Step is a circle.
 const LINE = 1            // Step is a line.
 const POINT = 2           // Step is a point.
 
-const amount_to_draw_init = 0.01;
-const intersection_size = 4;
-const point_size = 6;
+const amount_to_draw_init = 0.01
+const intersection_size = 4
+const point_size = 6
 
 /******************************************************************************/
 /************************** END CODES AND CONSTANTS ***************************/
@@ -111,7 +111,7 @@ function update_scale(x, y) {
 /****************************** P5 DRAW METHODS *******************************/
 /******************************************************************************/
 
-// TEST //
+// TEST. THESE DO NOT MAKE ANY SENSE. //
 steps = [
   {
     type: CIRCLE,
@@ -152,17 +152,19 @@ steps = [
     type: POINT,
     x: 300,
     y: 200,
+    x_int: 20,
+    y_int: 2,
     amount_to_draw: amount_to_draw_init
   }
 ]
 
 function setup() {
   // Get the window width and height.
-  width = $(window).width()
-  height = $(window).height()
+  width = $("#p5-container").width()
+  height = $("#p5-container").height()
 
   // Create the canvas and pin it to the container in the html page.
-  var canvas = createCanvas(width, height)
+  canvas = createCanvas(width, height)
   canvas.parent("p5-container")
 
   // Set up some basic draw parameters.

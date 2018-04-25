@@ -4,6 +4,13 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+#p5-container {
+  width: 100%;
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+}
+
 .entry-text {
   padding-top: 5;
   padding-bottom: 5;
@@ -13,7 +20,7 @@ body {
   width: 100%;
 }
 
-#artist_searchbar {
+#searchbar {
   padding: 4px 6px;
   margin: 14px 10px;
   width: 30%;
