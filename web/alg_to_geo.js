@@ -13,7 +13,6 @@ class Evaluation {
 // returns the list of must-draw objects of input tree
 // (which is just a parent node)
 function return_list(tree) {
-  console.log(tree.root)
   return return_list_recur(tree.root).evalList
 }
 
