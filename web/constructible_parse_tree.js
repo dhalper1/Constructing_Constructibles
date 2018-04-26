@@ -88,7 +88,7 @@ class Tree {
 				return new Operation("sqrt", this.parse(input[4]), null)
 			}
 		} else if (input !== "") {
-			return new Operation(parseInt(input[0]), null, null)
+			return new Operation(parseInt(input), null, null)
 		}
 	}
 

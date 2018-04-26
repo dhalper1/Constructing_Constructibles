@@ -9,10 +9,10 @@ class Evaluation {
   this.evalList = evalList
 }
 
-// returns the list of must-draw objects of input tree 
+// returns the list of must-draw objects of input tree
 // (which is just a parent node)
 function return_list(tree) {
-  return return_list_recur(tree).evalList
+  return return_list_recur(tree.root).evalList
 }
 
 // helper for return_list that works recursively and returns an Evaluation
@@ -189,7 +189,7 @@ fucntion divEvals(evalA, evalB) {
 
 // must add (evaluat + 1) and (evaluat + 1)/2 to the parse tree as children of a sqrt
 function sqrtEval(evaluat) {
-  return 
+  return
   (Evaluation(Math.sqrt(evaluat.num),
     evaluat.evalList.concat(
       [
