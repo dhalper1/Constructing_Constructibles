@@ -65,20 +65,20 @@ function inv_trans_y(y) {
 // @return: nothing.
 function update_scale(x, y) {
   if (steps[current_step].x_int > inv_trans_x(width)) {
-    x_scale = abs(0.95 * (width / 2.0) / (steps[current_step].x_int + x_offset))
+    x_scale = abs(0.90 * (width / 2.0) / (steps[current_step].x_int + x_offset))
     y_scale = x_scale
     redraw = true
   } else if (steps[current_step].x_int < inv_trans_x(0)) {
-    x_scale = abs(0.95 * (width / 2.0) / (steps[current_step].x_int + x_offset))
+    x_scale = abs(0.90 * (width / 2.0) / (steps[current_step].x_int + x_offset))
     y_scale = x_scale
     redraw = true
   }
   if (steps[current_step].y_int < inv_trans_y(height)) {
-    y_scale = abs(0.95 * (height / 2.0) / (y + y_offset))
+    y_scale = abs(0.90 * (height / 2.0) / (y + y_offset))
     x_scale = y_scale
     redraw = true
   } else if (steps[current_step].y_int > inv_trans_y(0)) {
-    y_scale = abs(0.95 * (height / 2.0) / (y + y_offset))
+    y_scale = abs(0.90 * (height / 2.0) / (y + y_offset))
     x_scale = y_scale
     redraw = true
   }

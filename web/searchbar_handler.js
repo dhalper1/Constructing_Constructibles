@@ -19,7 +19,6 @@ $(document).ready(function()
 })
 
 function inputFocus(i) {
-  i.value = "";
   i.style.color = "#000";
 }
 function inputBlur(i) {
