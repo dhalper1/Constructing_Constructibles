@@ -4,9 +4,10 @@
 
 // a class to hold the current number and list of ordered must-draw objects
 class Evaluation {
-  constructor(num, evalList)
-  this.num = num
-  this.evalList = evalList
+  constructor(num, evalList) {
+    this.num = num
+    this.evalList = evalList
+  }
 }
 
 // returns the list of must-draw objects of input tree
@@ -17,25 +18,28 @@ function return_list(tree) {
 
 // helper for return_list that works recursively and returns an Evaluation
 function return_list_recur(node) {
-  if (node.isLeaf) {
+  console.log(node)
+  if (node.is_leaf) {
     if (cons_ints) {
       // construct the integer
+    } else {
+      return new Evaluation(node.operator, [])
     }
   } else {
-    leftEval = return_list_recur(node.left)
-    rightEval = return_list_recur(node.right)
+    leftEval = return_list_recur(node.l_child)
+    rightEval = return_list_recur(node.r_child)
     switch(node.operator) {
       case "+" :
         return addEvals(leftEval, rightEval)
         break;
       case "-" :
-        return addEvals(leftEval, Evaluation((rightEval.num * -1),rightEval.evalList))
+        return addEvals(leftEval, new Evaluation((rightEval.num * -1),rightEval.evalList))
         break;
       case "*" :
         return (multEvals(leftEval, rightEval))
         break;
       case "/" :
-        return (multEvals(leftEval, Evaluation((1.0/rightEval.num), rightEval.evalList)))
+        return (multEvals(leftEval, new Evaluation((1.0/rightEval.num), rightEval.evalList)))
         break;
       case "sqrt" :
         break
@@ -44,7 +48,8 @@ function return_list_recur(node) {
 }
 
 function addEvals(evalA, evalB) {
-  return Evaluation(evalA.num + evalB.num,
+  console.log(evalA.num + evalB.num)
+  return new Evaluation(evalA.num + evalB.num,
     evalA.evalList.concat(evalB.evalList.concat(
       [
         {
@@ -60,9 +65,9 @@ function addEvals(evalA, evalB) {
           type: CIRCLE,
           x0: evalA.num,
           y0: 0,
-          r: evalB.num
-          x_int: evalA.num + evalB.num
-          y_int: 0
+          r: evalB.num,
+          x_int: evalA.num + evalB.num,
+          y_int: 0,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -78,28 +83,28 @@ function addEvals(evalA, evalB) {
 }
 
 function multEvals(evalA, evalB) {
-  return Evaluation(evalA.num * evalB.num,
+  return new Evaluation(evalA.num * evalB.num,
     evalA.evalList.concat(evalB.evalList.concat(
       [
         {
           type: LINE,
-          m: 0
-          b: 1
-          x_int: (evalA.num)
-          y_int: 1
+          m: 0,
+          b: 1,
+          x_int: (evalA.num),
+          y_int: 1,
           amount_to_draw: amount_to_draw_init
         },
         {
           type: VLINE,
-          x: evalA.num
-          x_int: evalA.num
-          y_int: 1
+          x: evalA.num,
+          x_int: evalA.num,
+          y_int: 1,
           amount_to_draw: amount_to_draw_init
         },
         {
           type: LINE,
           m: 0,
-          b: evalB.num
+          b: evalB.num,
           x_int: (evalA.num * evalB.num),
           y_int: (evalB.num),
           amount_to_draw: amount_to_draw_init
@@ -118,7 +123,7 @@ function multEvals(evalA, evalB) {
           y0: (evalB.num),
           r: evalB.num,
           x_int: (evalA.num * evalB.num),
-          y_int: 0
+          y_int: 0,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -132,15 +137,15 @@ function multEvals(evalA, evalB) {
         }])))
 }
 
-fucntion divEvals(evalA, evalB) {
-  return Evaluation(evalA / evalB,
+function divEvals(evalA, evalB) {
+  return new Evaluation(evalA / evalB,
     evalA.evalList.concat(evalB.evalList.concat(
       [
         {
           type: VLINE,
-          x: evalA.num
-          x_0: evalA.num
-          y_0: evalB.num
+          x: evalA.num,
+          x_0: evalA.num,
+          y_0: evalB.num,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -190,7 +195,7 @@ fucntion divEvals(evalA, evalB) {
 // must add (evaluat + 1) and (evaluat + 1)/2 to the parse tree as children of a sqrt
 function sqrtEval(evaluat) {
   return
-  (Evaluation(Math.sqrt(evaluat.num),
+  (new Evaluation(Math.sqrt(evaluat.num),
     evaluat.evalList.concat(
       [
         {
@@ -214,7 +219,7 @@ function sqrtEval(evaluat) {
           type: CIRCLE,
           x0: (Math.sqrt(evaluat.num)),
           y0: 1,
-          r: 1:
+          r: 1,
           x_int: (Math.sqrt(evaluat.num)),
           y_int: 0,
           amount_to_draw: amount_to_draw_init
@@ -222,7 +227,7 @@ function sqrtEval(evaluat) {
 }
 
 function combineEvals(evalA, evalB) {
-  return Evaluation(evalB.num, (evalA.evalList.concat(evalB.evalList)))
+  return new Evaluation(evalB.num, (evalA.evalList.concat(evalB.evalList)))
 }
 
 /******************************************************************************/

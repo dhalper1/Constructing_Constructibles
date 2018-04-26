@@ -25,9 +25,9 @@ function main(query) {
     document.getElementById('searchbar').blur()
     document.getElementById('searchbar').value = "invalid input!"
   } else {
-    console.log(parse_tree)
     new_steps = return_list(parse_tree)
     // new_steps = test_steps()
+    // console.log(new_steps)
     reset_renderer(new_steps)
   }
 }
