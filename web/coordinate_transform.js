@@ -2,8 +2,8 @@
 /**************************** CODES AND CONSTANTS *****************************/
 /******************************************************************************/
 
-const default_x_scale = 10.0
-const default_y_scale = 10.0
+const default_x_scale = 100.0
+const default_y_scale = 100.0
 const default_x_offset = 0.0
 const default_y_offset = 0.0
 

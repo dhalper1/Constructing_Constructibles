@@ -23,7 +23,7 @@ function parse_tree_to_geometric_helper(node) {
   if (node.is_leaf) { // we should stop the recursion
     return []
   }
-  else if (node.operator = "sqrt") { // there's only a left child
+  else if (node.operator == "sqrt") { // there's only a left child
     child = node.l_child
     return parse_tree_to_geometric_helper(child)
   }

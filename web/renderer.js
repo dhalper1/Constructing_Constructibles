@@ -105,6 +105,13 @@ function draw_entire_scene() {
   line(0, trans_y(0), width, trans_y(0))      // x axis
   line(trans_x(0), 0, trans_x(0), height)     // y axis
 
+  // draw the origin and the point (1, 0)
+  noStroke()
+  fill(250, 70, 250)
+  ellipse(trans_x(0), trans_y(0), point_size, point_size)
+  ellipse(trans_x(1), trans_y(0), point_size, point_size)
+
+  // redraw all of the shapes we've already drawn
   for (i = 0; i < current_step; i++) {
     step = steps[i]
     if (step.type == CIRCLE) {
