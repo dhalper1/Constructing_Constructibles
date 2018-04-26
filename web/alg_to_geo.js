@@ -18,7 +18,6 @@ function return_list(tree) {
 
 // helper for return_list that works recursively and returns an Evaluation
 function return_list_recur(node) {
-  console.log(node)
   if (node.is_leaf) {
     if (cons_ints) {
       // construct the integer
@@ -26,8 +25,8 @@ function return_list_recur(node) {
       return new Evaluation(node.operator, [])
     }
   } else {
-    leftEval = return_list_recur(node.l_child)
-    rightEval = return_list_recur(node.r_child)
+    let leftEval = return_list_recur(node.l_child)
+    let rightEval = return_list_recur(node.r_child)
     switch(node.operator) {
       case "+" :
         return addEvals(leftEval, rightEval)
