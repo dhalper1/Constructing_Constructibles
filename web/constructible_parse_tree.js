@@ -93,15 +93,30 @@ class Tree {
             console.log(left_sub);
             console.log(right_sub);
 
-            i = right_sub[1];
+            // i = right_sub[1];
 
             return new Operation(input[1], this.parse(left_to_parse), this.parse(right_to_parse))
         } else if (input.startsWith("sqrt(")) {
-            if (this.operator_set.has(input[5])) {
-                return new Operation("sqrt", new Operation(parseInt(input[5]), null))
-            } else {
-                return new Operation("sqrt", this.parse(input[4]), null) // TODO NOTE THIS LOOKS WRONG SHOULD MAYBE BE 5 CAUSE NOT IN OPERATOR_SET
+            // if (this.operator_set.has(input[5])) {
+            //     return new Operation("sqrt", new Operation(parseInt(input[5]), null))
+            // } else {
+            //     return new Operation("sqrt", this.parse(input[4]), null) // TODO NOTE THIS LOOKS WRONG SHOULD MAYBE BE 5 CAUSE NOT IN OPERATOR_SET
+            // }
+            let i = 5;
+            while (input[i] === " ") {
+                i++
             }
+            if (this.operator_set.has(input[i])) {
+                return new Operation("sqrt", new Operation(this.parse(input.substring(4, input.length))))
+            } else {
+                // Notice that we cut off the final parentheses here
+                return new Operation("sqrt", new Operation(parseInt(input.substring(i, input.length - 1)), null, null))
+            }
+            // let substr = input.substring(i, input.length - 1) // Get's rid of closing parentheses
+            // if (this.operator_set.has(substr[0])) {
+            //     return new Operation("sqrt", new Operation())
+            // }
+
         } else if (input !== "") {
             // console.log(parseInt(input));
             return new Operation(parseInt(input), null, null)
