@@ -26,8 +26,8 @@ function main(query) {
     document.getElementById('searchbar').value = "invalid input!"
   } else {
     console.log(parse_tree)
-    // steps = parse_tree_to_geometric(parse_tree)
-    new_steps = test_steps()
+    new_steps = parse_tree_to_geometric(parse_tree)
+    // new_steps = test_steps()
     reset_renderer(new_steps)
   }
 }
