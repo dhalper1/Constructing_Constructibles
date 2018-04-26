@@ -21,7 +21,20 @@ function parse_tree_to_geometric(tree) {
 
 function parse_tree_to_geometric_helper(node) {
   if (node.is_leaf) { // we should stop the recursion
-    return []
+    circles = []
+    // this will only work for positive numbers
+    for (i = 1; i < node.operator; i++) {
+      circles[i-1] = {
+        type: CIRCLE,
+        x0: i,
+        y0: 0,
+        r: 1,
+        x_int: i + 1,
+        y_int: 0,
+        amount_to_draw: amount_to_draw_init
+      }
+    }
+    return circles
   }
   else if (node.operator == "sqrt") { // there's only a left child
     child = node.l_child
