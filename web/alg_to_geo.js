@@ -13,6 +13,7 @@ class Evaluation {
 // returns the list of must-draw objects of input tree
 // (which is just a parent node)
 function return_list(tree) {
+  console.log(tree.root)
   return return_list_recur(tree.root).evalList
 }
 
@@ -26,18 +27,22 @@ function return_list_recur(node) {
     }
   } else {
     let leftEval = return_list_recur(node.l_child)
-    let rightEval = return_list_recur(node.r_child)
+    let rightEval = null
     switch(node.operator) {
       case "+" :
+        rightEval = return_list_recur(node.r_child)
         return addEvals(leftEval, rightEval)
         break;
       case "-" :
+        rightEval = return_list_recur(node.r_child)
         return addEvals(leftEval, new Evaluation((rightEval.num * -1),rightEval.evalList))
         break;
       case "*" :
+        rightEval = return_list_recur(node.r_child)
         return (multEvals(leftEval, rightEval))
         break;
       case "/" :
+        rightEval = return_list_recur(node.r_child)
         return (multEvals(leftEval, new Evaluation((1.0/rightEval.num), rightEval.evalList)))
         break;
       case "sqrt" :
@@ -117,10 +122,8 @@ function multEvals(evalA, evalB) {
           amount_to_draw: amount_to_draw_init
         },
         {
-          type: CIRCLE,
-          x0: (evalA.num * evalB.num),
-          y0: (evalB.num),
-          r: evalB.num,
+          type: VLINE,
+          x: (evalA.num * evalB.num),
           x_int: (evalA.num * evalB.num),
           y_int: 0,
           amount_to_draw: amount_to_draw_init
@@ -156,7 +159,7 @@ function divEvals(evalA, evalB) {
           amount_to_draw: amount_to_draw_init
         },
         {
-          type: Line,
+          type: LINE,
           m: 0,
           b: evalA.num,
           x0: (evalA.num / evalB.num),
@@ -197,6 +200,71 @@ function sqrtEval(evaluat) {
   (new Evaluation(Math.sqrt(evaluat.num),
     evaluat.evalList.concat(
       [
+        {
+          type: CIRCLE,
+          x0: 0,
+          y0: 0,
+          r: evaluat.num,
+          x_int: evaluat.num,
+          y_int: 0,
+        },
+        {
+          type: CIRCLE,
+          x0: evaluat.num,
+          y0: 0,
+          r: 1,
+          x_int: evaluat.num + 1,
+          y_int: 0
+        },
+        {
+          type: VLINE,
+          x: (evaluat.num + 1),
+          x_0: (evaluat.num + 1),
+          y_0: 2,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: LINE,
+          m: 0,
+          b: 2,
+          x0: (evaluat.num + 1),
+          y0: 2,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: LINE,
+          m: 0,
+          b: (evaluat.num + 1),
+          x0: ((evaluat.num + 1) / 2),
+          y0: (evaluat.num + 1),
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: LINE,
+          m: (2 / (evaluat.num + 1)),
+          b: 0,
+          x0: ((evaluat.num + 1) / 2),
+          y0: (evaluat.num + 1),
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: CIRCLE,
+          x0: ((evaluat.num + 1) / 2),
+          y0: (evaluat.num + 1),
+          r: (evaluat.num + 1),
+          x_int: ((evaluat.num + 1) / 2),
+          y_int: 0,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: CIRCLE,
+          x0: 0,
+          y0: 0,
+          r: ((evaluat.num + 1) / 2),
+          x_int: 0,
+          y_int: 0,
+          amount_to_draw: amount_to_draw_init
+        },
         {
           type: LINE,
           m: 0,

@@ -5,6 +5,7 @@
 const CIRCLE = 0          // Step is a circle.
 const LINE = 1            // Step is a line.
 const POINT = 2           // Step is a point.
+const VLINE = 3           // Step is a vertical line
 
 const amount_to_draw_init = 0.01
 const intersection_size = 4
@@ -86,6 +87,10 @@ function draw() {
       arc(trans_x(steps[current_step].x), trans_y(steps[current_step].y),
                   point_size, point_size,
                   0, steps[current_step].amount_to_draw * 2 * PI)
+    } else if(steps[current_step].type == VLINE) {
+      stroke(130, 240, 180)
+      line(trans_x(steps[current_step].x), 0, trans_x(steps[current_step].x),
+        height * steps[current_step].amount_to_draw)
     }
     // We've just completed an additional portion of the step.
     steps[current_step].amount_to_draw += draw_speed
@@ -129,6 +134,9 @@ function draw_entire_scene() {
       fill(130, 240, 180)
       ellipse(trans_x(step.x), trans_y(step.y),
                   point_size, point_size)
+    } else if (step.type == VLINE) {
+      stroke(130, 240, 180)
+      line(trans_x(step.x), 0, trans_x(step.x), height)
     }
     fill(240, 20, 40)
     noStroke()
