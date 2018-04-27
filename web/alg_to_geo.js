@@ -289,7 +289,6 @@ function divEvals(evalA, evalB) {
         }])))
 }
 
-// must add (evaluat + 1) and (evaluat + 1)/2 to the parse tree as children of a sqrt
 function sqrtEval(evaluat) {
   return
   (new Evaluation(Math.sqrt(evaluat.num),
@@ -301,7 +300,7 @@ function sqrtEval(evaluat) {
           y0: 0,
           r: evaluat.num,
           x_int: evaluat.num,
-          y_int: 0,
+          y_int: 0
         },
         {
           type: CIRCLE,
