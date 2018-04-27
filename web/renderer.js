@@ -201,6 +201,14 @@ function mouseReleased() {
   last_y_press = 0
 }
 
+function mouseWheel(event) {
+  noLoop()
+  x_scale = max(event.delta + x_scale, 0.01)
+  y_scale = max(event.delta + y_scale, 0.01)
+  draw_entire_scene()
+  loop()
+}
+
 /******************************************************************************/
 /**************************** END P5 DRAW METHODS *****************************/
 /******************************************************************************/
