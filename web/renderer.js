@@ -170,6 +170,15 @@ function reset_renderer(new_steps) {
   loop()
 }
 
+function windowResized() {
+  noLoop()
+  width = $("#p5-container").width()
+  height = $("#p5-container").height()
+  resizeCanvas(width, height)
+  draw_entire_scene()
+  loop()
+}
+
 /******************************************************************************/
 /**************************** END P5 DRAW METHODS *****************************/
 /******************************************************************************/
