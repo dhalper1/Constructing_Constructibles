@@ -14,7 +14,7 @@ construct_ints = false
 
 // a class to hold the current number and list of ordered must-draw objects
 class Evaluation {
-  
+
   constructor(num, evalList) {
     this.num = num
     this.evalList = evalList
@@ -38,60 +38,6 @@ function arrays_equal(a, b) {
     if (a[i] !== b[i]) return false;
   }
   return true;
-}
-
-// checks near-equality for nums or fields of shapes
-function close_enough(x, y) {
-  let to_return = false
-  if (x == y) {
-    to_return = true
-  } else if (isNaN(x)) {
-    to_return = false
-  } else if (isNaN(y)) {
-    to_return = false
-  } else {
-    to_return = (Math.abs(x-y) < .0001)
-  }
-  return to_return
-}
-
-// checks for shape equality
-function shape_comparator(aS, bS) {
-  if ((close_enough(aS.x0, bS.x0)) &&
-    (close_enough(aS.y0, bS.y0)) &&
-    (close_enough(aS.r, bS.r)) &&
-    (close_enough(aS.m, bS.m)) &&
-    (close_enough(aS.b, bS.b)) &&
-    (close_enough(aS.x, bS.x))) {
-    return true
-  } else {
-    return false
-  }
-}
-
-// checks a list for containment of a shape
-function contains_shape(list, shape) {
-  let n = 0
-  for (n = 0; n < list.length; n++) {
-    if (shape_comparator(list[n], shape)) {
-      return true
-    }
-  }
-  return false
-}
-
-// filters the list for duplicate shapes
-function filter_shapes(list) {
-  let constructed_shapes = []
-  let to_return = []
-  let n = 0
-  for (n = 0; n < list.length; n++) {
-    if (!contains_shape(constructed_shapes, list[n])) {
-      to_return.push(list[n])
-      constructed_shapes.push(list[n])
-    }
-  }
-  return to_return
 }
 
 // returns the list of must-draw objects of input tree
@@ -244,16 +190,16 @@ function divEvals(evalA, evalB) {
           type: LINE,
           m: 0,
           b: 1,
-          x0: (evalA.num / evalB.num),
-          y0: (evalA.num),
+          x_int: (evalA.num / evalB.num),
+          y_int: (evalA.num),
           amount_to_draw: amount_to_draw_init
-        }, 
+        },
         {
           type: LINE,
           m: 0,
-          b: evalB.num,
-          x0: (evalA.num / evalB.num),
-          y0: (evalB.num),
+          b: evalA.num,
+          x_int: (evalA.num / evalB.num),
+          y_int: evalA.num,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -262,13 +208,13 @@ function divEvals(evalA, evalB) {
           x_int: (evalA.num / evalB.num),
           y_int: (evalA.num),
           amount_to_draw: amount_to_draw_init
-        }, 
+        },
         {
           type: LINE,
           m: (evalB.num / evalA.num),
           b: 0,
-          x0: (evalA.num / evalB.num),
-          y0: (evalA.num),
+          x_int: (evalA.num / evalB.num),
+          y_int: evalA.num,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -278,7 +224,7 @@ function divEvals(evalA, evalB) {
           y_int: 0,
           amount_to_draw: amount_to_draw_init
         },
-        { 
+        {
           type: CIRCLE,
           x0: 0,
           y0: 0,
@@ -314,32 +260,32 @@ function sqrtEval(evaluat) {
         {
           type: VLINE,
           x: (evaluat.num + 1),
-          x_0: (evaluat.num + 1),
-          y_0: 2,
+          x_int: (evaluat.num + 1),
+          y_int: 2,
           amount_to_draw: amount_to_draw_init
         },
         {
           type: LINE,
           m: 0,
           b: 2,
-          x0: (evaluat.num + 1),
-          y0: 2,
+          x_int: (evaluat.num + 1),
+          y_int: 2,
           amount_to_draw: amount_to_draw_init
         },
         {
           type: LINE,
           m: 0,
           b: (evaluat.num + 1),
-          x0: ((evaluat.num + 1) / 2),
-          y0: (evaluat.num + 1),
+          x_int: ((evaluat.num + 1) / 2),
+          y_int: (evaluat.num + 1),
           amount_to_draw: amount_to_draw_init
         },
         {
           type: LINE,
           m: (2 / (evaluat.num + 1)),
           b: 0,
-          x0: ((evaluat.num + 1) / 2),
-          y0: (evaluat.num + 1),
+          x_int: ((evaluat.num + 1) / 2),
+          y_int: (evaluat.num + 1),
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -364,8 +310,8 @@ function sqrtEval(evaluat) {
           type: LINE,
           m: 0,
           b: (1),
-          x0: (Math.sqrt(evaluat.num)),
-          y0: 1,
+          x_int: (Math.sqrt(evaluat.num)),
+          y_int: 1,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -394,4 +340,87 @@ function combineEvals(evalA, evalB) {
 
 /******************************************************************************/
 /************************ END FUNCS FOR EACH OPERATOR *************************/
+/******************************************************************************/
+
+
+
+/******************************************************************************/
+/*********************************** UTILITY **********************************/
+/******************************************************************************/
+
+
+// checks near-equality for nums or fields of shapes
+function close_enough(x, y) {
+  let to_return = false
+  if (x == y) {
+    to_return = true
+  } else if (isNaN(x)) {
+    to_return = false
+  } else if (isNaN(y)) {
+    to_return = false
+  } else {
+    to_return = (Math.abs(x-y) < .0001)
+  }
+  return to_return
+}
+
+// checks for shape equality
+function shape_comparator(aS, bS) {
+  if ((close_enough(aS.x0, bS.x0)) &&
+    (close_enough(aS.y0, bS.y0)) &&
+    (close_enough(aS.r, bS.r)) &&
+    (close_enough(aS.m, bS.m)) &&
+    (close_enough(aS.b, bS.b)) &&
+    (close_enough(aS.x, bS.x))) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// checks a list for containment of a shape
+function contains_shape(list, shape) {
+  let n = 0
+  for (n = 0; n < list.length; n++) {
+    if (shape_comparator(list[n], shape)) {
+      return true
+    }
+  }
+  return false
+}
+
+// filters the list for duplicate shapes
+function filter_shapes(list) {
+  let constructed_shapes = []
+  let to_return = []
+  let n = 0
+  for (n = 0; n < list.length; n++) {
+    if (!contains_shape(constructed_shapes, list[n])) {
+      to_return.push(list[n])
+      constructed_shapes.push(list[n])
+    }
+  }
+  return to_return
+}
+
+// DEPRECATED. Compare two draw steps.
+function compare_draw_steps(a, b) {
+  if (a.type == CIRCLE && b.type == CIRCLE) {
+    return (a.x0 == b.x0 && a.y0 == b.y0 && a.r == b.r
+            && a.x_int == b.x_int && a.y_int == b.y_int)
+  } else if (a.type == LINE && b.type == LINE) {
+    return (a.m == b.m && a.b == b.b
+            && a.x_int == b.x_int && a.y_int == b.y_int)
+  } else if (a.type == POINT && b.type == POINT) {
+    return (a.x == b.x && a.y == b.y
+            && a.x_int == b.x_int && a.y_int == b.y_int)
+  } else if (a.type == VLINE && b.type == VLINE) {
+    return (a.x == b.x && a.x_int == b.x_int && a.y_int == b.y_int)
+  } else {
+    return false
+  }
+}
+
+/******************************************************************************/
+/********************************* END UTILITY ********************************/
 /******************************************************************************/
