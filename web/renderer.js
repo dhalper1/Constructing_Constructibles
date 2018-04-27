@@ -179,6 +179,28 @@ function windowResized() {
   loop()
 }
 
+function mousePressed() {
+  last_x_press = mouseX
+  last_y_press = mouseY
+}
+
+function mouseDragged() {
+  noLoop()
+  dx = mouseX - last_x_press
+  dy = mouseY - last_y_press
+  x_offset = x_offset + dx / x_scale
+  y_offset = y_offset - dy / y_scale
+  last_x_press = mouseX
+  last_y_press = mouseY
+  draw_entire_scene()
+  loop()
+}
+
+function mouseReleased() {
+  last_x_press = 0
+  last_y_press = 0
+}
+
 /******************************************************************************/
 /**************************** END P5 DRAW METHODS *****************************/
 /******************************************************************************/
