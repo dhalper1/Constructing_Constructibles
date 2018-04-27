@@ -244,7 +244,7 @@ function sqrtEval(evaluat) {
           x0: 0,
           y0: 0,
           r: evaluat.num,
-          x_int: evaluat.num,]
+          x_int: evaluat.num,
           y_int: 0,
           amount_to_draw: amount_to_draw_init
         },
@@ -288,15 +288,15 @@ function sqrtEval(evaluat) {
           y_int: (evaluat.num + 1),
           amount_to_draw: amount_to_draw_init
         },
-        {
-          type: CIRCLE,
-          x0: ((evaluat.num + 1) / 2),
-          y0: (evaluat.num + 1),
-          r: (evaluat.num + 1),
-          x_int: ((evaluat.num + 1) / 2),
-          y_int: 0,
-          amount_to_draw: amount_to_draw_init
-        },
+        // {
+        //   type: CIRCLE,
+        //   x0: ((evaluat.num + 1) / 2),
+        //   y0: (evaluat.num + 1),
+        //   r: (evaluat.num + 1),
+        //   x_int: ((evaluat.num + 1) / 2),
+        //   y_int: 0,
+        //   amount_to_draw: amount_to_draw_init
+        // },
         {
           type: CIRCLE,
           x0: 0,
@@ -324,10 +324,17 @@ function sqrtEval(evaluat) {
           amount_to_draw: amount_to_draw_init
         },
         {
+          type: VLINE,
+          x: (Math.sqrt(evaluat.num)),
+          x_int: (Math.sqrt(evaluat.num)),
+          y_int: 0,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
           type: CIRCLE,
-          x0: (Math.sqrt(evaluat.num)),
-          y0: 1,
-          r: 1,
+          x0: 0,
+          y0: 0,
+          r: (Math.sqrt(evaluat.num)),
           x_int: (Math.sqrt(evaluat.num)),
           y_int: 0,
           amount_to_draw: amount_to_draw_init
