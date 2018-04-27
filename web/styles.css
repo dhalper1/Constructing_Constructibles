@@ -4,6 +4,27 @@ body {
   font-family: 'Nunito', sans-serif;
 }
 
+a {
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+  text-decoration: none;
+}
+
+/* unvisited link */
+a:link {
+    color: rgb(97, 103, 139);
+}
+
+/* visited link */
+a:visited {
+    color: rgb(97, 103, 139);
+}
+
+/* mouse over link */
+a:hover {
+    color: rgb(51, 71, 185);
+}
+
 #p5-container {
   width: 100%;
   position: absolute;

@@ -152,7 +152,7 @@ function draw_entire_scene() {
     ellipse(trans_x(step.x_int), trans_y(step.y_int),
               intersection_size, intersection_size)
     if (i == steps.length - 1) {
-      fill(165, 30, 249)
+      fill(240, 64, 111)
       noStroke()
       ellipse(trans_x(step.x_int), trans_y(step.y_int),
                 final_point_size, final_point_size)
