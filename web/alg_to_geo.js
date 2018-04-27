@@ -1,26 +1,112 @@
 /******************************************************************************/
-/************************* TREE INTO LIST OF DRAWABLES ************************/
+/****************************** GLOBAL PARAMETERS *****************************/
+/******************************************************************************/
+
+construct_ints = false
+
+/******************************************************************************/
+/**************************** END GLOBAL PARAMETERS ***************************/
+/******************************************************************************/
+
+/******************************************************************************/
+/************************ CLASS DEF AND HIGH-LEVEL FUNCS **********************/
 /******************************************************************************/
 
 // a class to hold the current number and list of ordered must-draw objects
 class Evaluation {
+  
   constructor(num, evalList) {
     this.num = num
     this.evalList = evalList
   }
+
+  equals(that) {
+    return ((this.num == that.num) && (arrays_equal(this.evalList, that.evalList)))
+  }
+}
+
+// copy & pasted from stackoverflow; used for Evaluation's equals(that)
+function arrays_equal(a, b) {
+  if (a === b) return true;
+  if (a == null || b == null) return false;
+  if (a.length != b.length) return false;
+
+  // If you don't care about the order of the elements inside
+  // the array, you should sort both arrays here.
+
+  for (var i = 0; i < a.length; ++i) {
+    if (a[i] !== b[i]) return false;
+  }
+  return true;
+}
+
+// checks near-equality for nums or fields of shapes
+function close_enough(x, y) {
+  let to_return = false
+  if (x == y) {
+    to_return = true
+  } else if (isNaN(x)) {
+    to_return = false
+  } else if (isNaN(y)) {
+    to_return = false
+  } else {
+    to_return = (Math.abs(x-y) < .0001)
+  }
+  return to_return
+}
+
+// checks for shape equality
+function shape_comparator(aS, bS) {
+  if ((close_enough(aS.x0, bS.x0)) &&
+    (close_enough(aS.y0, bS.y0)) &&
+    (close_enough(aS.r, bS.r)) &&
+    (close_enough(aS.m, bS.m)) &&
+    (close_enough(aS.b, bS.b)) &&
+    (close_enough(aS.x, bS.x))) {
+    return true
+  } else {
+    return false
+  }
+}
+
+// checks a list for containment of a shape
+function contains_shape(list, shape) {
+  let n = 0
+  for (n = 0; n < list.length; n++) {
+    if (shape_comparator(list[n], shape)) {
+      return true
+    }
+  }
+  return false
+}
+
+// filters the list for duplicate shapes
+function filter_shapes(list) {
+  let constructed_shapes = []
+  let to_return = []
+  let n = 0
+  for (n = 0; n < list.length; n++) {
+    if (!contains_shape(constructed_shapes, list[n])) {
+      to_return.push(list[n])
+      constructed_shapes.push(list[n])
+    }
+  }
+  return to_return
 }
 
 // returns the list of must-draw objects of input tree
 // (which is just a parent node)
 function return_list(tree) {
   console.log(tree.root)
-  return return_list_recur(tree.root).evalList
+  let listUnfiltered = return_list_recur(tree.root).evalList
+  return filter_shapes(listUnfiltered)
 }
 
 // helper for return_list that works recursively and returns an Evaluation
 function return_list_recur(node) {
   if (node.is_leaf) {
-    if (cons_ints) {
+    if (construct_ints) {
+      if (contains_inexact) {}
       // construct the integer
     } else {
       return new Evaluation(node.operator, [])
@@ -39,31 +125,40 @@ function return_list_recur(node) {
         break;
       case "*" :
         rightEval = return_list_recur(node.r_child)
-        return (multEvals(leftEval, rightEval))
+        return multEvals(leftEval, rightEval)
         break;
       case "/" :
         rightEval = return_list_recur(node.r_child)
-        return (multEvals(leftEval, new Evaluation((1.0/rightEval.num), rightEval.evalList)))
+        return divEvals(leftEval, rightEval)
         break;
       case "sqrt" :
+        return sqrtEval(leftEval)
         break
     }
   }
 }
 
+/******************************************************************************/
+/********************** END CLASS DEF AND HIGH-LEVEL FUNCS ********************/
+/******************************************************************************/
+
+/******************************************************************************/
+/*************************** FUNCS FOR EACH OPERATOR **************************/
+/******************************************************************************/
+
 function addEvals(evalA, evalB) {
   console.log(evalA.num + evalB.num)
-  return new Evaluation(evalA.num + evalB.num,
+  return new Evaluation((evalA.num + evalB.num),
     evalA.evalList.concat(evalB.evalList.concat(
       [
         {
           type: CIRCLE,
-           x0: 0,
-           y0: 0,
-           r: evalA.num,
-           x_int: evalA.num,
-           y_int: 0,
-           amount_to_draw: amount_to_draw_init
+          x0: 0,
+          y0: 0,
+          r: evalA.num,
+          x_int: evalA.num,
+          y_int: 0,
+          amount_to_draw: amount_to_draw_init
         },
         {
           type: CIRCLE,
@@ -87,6 +182,7 @@ function addEvals(evalA, evalB) {
 }
 
 function multEvals(evalA, evalB) {
+  console.log(evalA.num * evalB.num)
   return new Evaluation(evalA.num * evalB.num,
     evalA.evalList.concat(evalB.evalList.concat(
       [
@@ -140,50 +236,49 @@ function multEvals(evalA, evalB) {
 }
 
 function divEvals(evalA, evalB) {
-  return new Evaluation(evalA / evalB,
+  console.log(evalA.num / evalB.num)
+  return new Evaluation(evalA.num / evalB.num,
     evalA.evalList.concat(evalB.evalList.concat(
       [
         {
-          type: VLINE,
-          x: evalA.num,
-          x_0: evalA.num,
-          y_0: evalB.num,
+          type: LINE,
+          m: 0,
+          b: 1,
+          x0: (evalA.num / evalB.num),
+          y0: (evalA.num),
           amount_to_draw: amount_to_draw_init
-        },
+        }, 
         {
           type: LINE,
           m: 0,
           b: evalB.num,
-          x0: evalA.num,
-          y0: evalB.num,
+          x0: (evalA.num / evalB.num),
+          y0: (evalB.num),
           amount_to_draw: amount_to_draw_init
         },
         {
-          type: LINE,
-          m: 0,
-          b: evalA.num,
-          x0: (evalA.num / evalB.num),
-          y0: evalA.num,
+          type: VLINE,
+          x: evalA.num,
+          x_int: (evalA.num / evalB.num),
+          y_int: (evalA.num),
           amount_to_draw: amount_to_draw_init
-        },
+        }, 
         {
           type: LINE,
           m: (evalB.num / evalA.num),
           b: 0,
           x0: (evalA.num / evalB.num),
-          y0: evalA.num,
+          y0: (evalA.num),
           amount_to_draw: amount_to_draw_init
         },
         {
-          type: CIRCLE,
-          x0: (evalA.num / evalB.num),
-          y0: evalA.num,
-          r: evalA.num,
+          type: VLINE,
+          x: (evalA.num / evalB.num),
           x_int: (evalA.num / evalB.num),
           y_int: 0,
           amount_to_draw: amount_to_draw_init
         },
-        {
+        { 
           type: CIRCLE,
           x0: 0,
           y0: 0,
@@ -298,5 +393,5 @@ function combineEvals(evalA, evalB) {
 }
 
 /******************************************************************************/
-/**************************** END LIST OF DRAWABLES ***************************/
+/************************ END FUNCS FOR EACH OPERATOR *************************/
 /******************************************************************************/
