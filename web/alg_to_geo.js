@@ -121,7 +121,7 @@ function addEvals(evalA, evalB) {
           y0: 0,
           r: evalA.num + evalB.num,
           x_int: 0,
-          y_int: 0,
+          y_int: evalA.num + evalB.num,
           amount_to_draw: amount_to_draw_init
         }
       ])))
@@ -176,7 +176,7 @@ function multEvals(evalA, evalB) {
           y0: 0,
           r: (evalA.num * evalB.num),
           x_int: 0,
-          y_int: 0,
+          y_int: evalA.num * evalB.num,
           amount_to_draw: amount_to_draw_init
         }])))
 }
@@ -230,7 +230,7 @@ function divEvals(evalA, evalB) {
           y0: 0,
           r: (evalA.num / evalB.num),
           x_int: 0,
-          y_int: 0,
+          y_int: (evalA.num / evalB.num),
           amount_to_draw: amount_to_draw_init
         }])))
 }

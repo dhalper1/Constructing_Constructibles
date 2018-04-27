@@ -152,7 +152,7 @@ function draw_entire_scene() {
     ellipse(trans_x(step.x_int), trans_y(step.y_int),
               intersection_size, intersection_size)
     if (i == steps.length - 1) {
-      fill(165, 30, 249)
+      fill(240, 64, 111)
       noStroke()
       ellipse(trans_x(step.x_int), trans_y(step.y_int),
                 final_point_size, final_point_size)
@@ -167,6 +167,45 @@ function reset_renderer(new_steps) {
   current_step = 0
   reset_transform_to_default()
   redraw = true
+  loop()
+}
+
+function windowResized() {
+  noLoop()
+  width = $("#p5-container").width()
+  height = $("#p5-container").height()
+  resizeCanvas(width, height)
+  draw_entire_scene()
+  loop()
+}
+
+function mousePressed() {
+  last_x_press = mouseX
+  last_y_press = mouseY
+}
+
+function mouseDragged() {
+  noLoop()
+  dx = mouseX - last_x_press
+  dy = mouseY - last_y_press
+  x_offset = x_offset + dx / x_scale
+  y_offset = y_offset - dy / y_scale
+  last_x_press = mouseX
+  last_y_press = mouseY
+  draw_entire_scene()
+  loop()
+}
+
+function mouseReleased() {
+  last_x_press = 0
+  last_y_press = 0
+}
+
+function mouseWheel(event) {
+  noLoop()
+  x_scale = max(event.delta + x_scale, 0.01)
+  y_scale = max(event.delta + y_scale, 0.01)
+  draw_entire_scene()
   loop()
 }
 
