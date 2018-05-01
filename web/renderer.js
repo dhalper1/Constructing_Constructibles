@@ -83,7 +83,7 @@ const underwatermelon = {
 
 current_step = 0        // current step in the drawing process
 redraw = false          // whether or not to redraw on this frame
-draw_speed = 0.5       // how fast to draw
+draw_speed = 0.06       // how fast to draw
 steps = []              // array of geometric steps
 cons_ints = true        // whether or not to draw the circles to make integers
 skin = default_skin     // skin to use for rendering
