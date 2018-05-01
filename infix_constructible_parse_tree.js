@@ -50,13 +50,19 @@ class Tree {
     parse(input) {
         input = input.trim();
         if ((input !== null) && (input[0] === "(") && (input.length >= 2)) {
-            const left_sub = this._find_substring(input, 3);
+            const left_sub = this._find_substring(input, 1);
             const left_to_parse = left_sub[0];
             let i = left_sub[1];
+            // Retrieving the next letter.  Should be an operator
+            while (input[i] === " ") {
+                i++
+            }
+            let operator = input[i];
+            i++;
             const right_sub = this._find_substring(input, i);
             const right_to_parse = right_sub[0];
 
-            return new Operation(input[1], this.parse(left_to_parse), this.parse(right_to_parse))
+            return new Operation(operator, this.parse(left_to_parse), this.parse(right_to_parse))
 
         } else if (input.startsWith("sqrt(")) {
             let i = 5;
@@ -82,7 +88,7 @@ class Tree {
      */
     is_valid(input_val) {
         return this._check_parens(input_val) && this._check_legal_characters(input_val) &&
-            this._check_prefix(input_val);
+            this._check_infix(input_val);
     }
 
     _check_parens(input_val) {
@@ -114,25 +120,25 @@ class Tree {
         return true
     }
 
-    _check_prefix(input_val) {
-        for (let i = 0; i < input_val.length - 1; i++) {
-            let char = input_val[i];
-            if (char === "(") {
-                if (i + 1 < input_val.length) {
-                    if (!this.operator_set.has(input_val[i + 1])) {
-                        if (i >= 1 && input_val[i - 1] !== 't') {
-                            return false
-                        }
-                    }
-                } else if (i >= 3) {
-                    if (!(input_val.substring(i - 4, i).startsWith("sqrt"))) {
-                        return false
-                    }
-                } else {
-                    return false
-                }
-            }
-        }
+    _check_infix(input_val) {
+        // for (let i = 0; i < input_val.length - 1; i++) {
+        //     let char = input_val[i];
+        //     if (char === "(") {
+        //         if (i + 1 < input_val.length) {
+        //             if (!this.operator_set.has(input_val[i + 1])) {
+        //                 if (i >= 1 && input_val[i - 1] !== 't') {
+        //                     return false
+        //                 }
+        //             }
+        //         } else if (i >= 3) {
+        //             if (!(input_val.substring(i - 4, i).startsWith("sqrt"))) {
+        //                 return false
+        //             }
+        //         } else {
+        //             return false
+        //         }
+        //     }
+        // }
         return true
     }
 
