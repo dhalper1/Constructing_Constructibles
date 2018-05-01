@@ -2,7 +2,7 @@
 /****************************** GLOBAL PARAMETERS *****************************/
 /******************************************************************************/
 
-construct_ints = false
+// construct_ints = false
 
 /******************************************************************************/
 /**************************** END GLOBAL PARAMETERS ***************************/
@@ -51,7 +51,7 @@ function return_list(tree) {
 // helper for return_list that works recursively and returns an Evaluation
 function return_list_recur(node) {
   if (node.is_leaf) {
-    if (construct_ints) {
+    if (cons_ints) {
         let circlesList = []
         var i
         for (i = 0; i < node.operator; i++) {

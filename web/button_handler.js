@@ -24,8 +24,9 @@ toggle between showing int construction and not showing it */
 function show_ints() {
   if (cons_ints) {
     document.getElementById("construct_ints").style.backgroundColor = skin.skin_button_color
+    cons_ints = false
   } else {
     document.getElementById("construct_ints").style.backgroundColor = skin.line_color_hex
+    cons_ints = true
   }
-  cons_ints = !cons_ints
 }
