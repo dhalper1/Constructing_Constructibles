@@ -62,22 +62,22 @@ function return_list_recur(node) {
               x0: 0,
               y0: i,
               r: 1,
-              x_int: i,
-              y_int: 0,
+              x_int: 0,
+              y_int: i+1,
               amount_to_draw: amount_to_draw_init
             }]))
         }
-        circlesList.concat(
+        circlesList = (circlesList.concat(
           [
           {
             type: CIRCLE,
             x0: 0,
             y0: 0,
             r: node.operator,
-            x_int: node.operator,
-            y_int: 0,
+            x_int: 0,
+            y_int: node.operator,
             amount_to_draw: amount_to_draw_init
-          }])
+          }]))
         return new Evaluation(node.operator, circlesList)
     } else {
       return new Evaluation(node.operator, [{
@@ -230,9 +230,9 @@ function divEvals(evalA, evalB) {
         {
           type: LINE,
           m: 0,
-          b: evalA.num,
-          x_int: (evalA.num / evalB.num),
-          y_int: evalA.num,
+          b: evalB.num,
+          x_int: (evalA.num),
+          y_int: evalB.num,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -247,7 +247,7 @@ function divEvals(evalA, evalB) {
           m: (evalB.num / evalA.num),
           b: 0,
           x_int: (evalA.num / evalB.num),
-          y_int: evalA.num,
+          y_int: 1,
           amount_to_draw: amount_to_draw_init
         },
         {
