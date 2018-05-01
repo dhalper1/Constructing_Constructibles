@@ -10,7 +10,7 @@
   <script src="coordinate_transform.js"></script>
   <script src="renderer.js"></script>
   <script src="searchbar_handler.js"></script>
-  <script src="dropdown_handler.js"></script>
+  <script src="button_handler.js"></script>
   <script src="constructible_parse_tree.js"></script>
   <script src="alg_to_geo.js"></script>
   <script src="test_resources.js"></script>
@@ -23,6 +23,7 @@
   <div class="flex-container">
     <div class="entry-text" id="nav" style="float:left">
         <button onclick="dropdown()" class="dropbtn" id="skin_button">Skin</button>
+        <button onclick="show_ints()" class="intbtn" id="construct_ints">Show Integers</button>
         <div id="skin_dropdown" class="dropdown-content">
           <a onclick="on_skin_change('default_skin')" id="default">Default</a>
           <a onclick="on_skin_change('watermelon')" id="watermelon">Watermelon</a>

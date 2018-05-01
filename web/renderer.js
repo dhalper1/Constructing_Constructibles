@@ -83,7 +83,7 @@ const underwatermelon = {
 
 current_step = 0        // current step in the drawing process
 redraw = false          // whether or not to redraw on this frame
-draw_speed = 0.02       // how fast to draw
+draw_speed = 0.005       // how fast to draw
 steps = []              // array of geometric steps
 cons_ints = false       // whether or not to draw the circles to make integers
 skin = default_skin     // skin to use for rendering
@@ -291,6 +291,7 @@ function on_skin_change(skin_id) {
   document.getElementById("nav").style.backgroundColor = skin.navbar_color
   document.getElementById("p5-container").style.backgroundColor = skin.bg_color
   document.getElementById("skin_button").style.backgroundColor = skin.skin_button_color
+  document.getElementById("construct_ints").style.backgroundColor = skin.skin_button_color
   draw_entire_scene()
 }
 
