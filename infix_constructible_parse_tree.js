@@ -10,6 +10,7 @@ class Operation {
 class Tree {
     constructor(input) {
         this.operator_set = new Set(["+", "-", "*", "/"]);
+        this.number_set = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
         this.root = this.is_valid(input) ? this.parse(input) : null
     }
 
@@ -66,15 +67,23 @@ class Tree {
 
         } else if (input.startsWith("sqrt(")) {
             let i = 5;
-            while (input[i] === " ") {
+            while (!this.operator_set.has(input[i]) && i < input.length) {
                 i++
             }
-            if (this.operator_set.has(input[i])) {
-                return new Operation("sqrt", new Operation(this.parse(input.substring(4, input.length))))
+            if (i < input.length) {
+                // It's another operation
+                return new Operation(this.parse(input.substring(4, input.length)))
             } else {
-                // Notice that we cut off the final parentheses here
-                return new Operation("sqrt", new Operation(parseInt(input.substring(i, input.length - 1)), null, null))
+                // It's a number.  Get rid of final parentheses
+                return new Operation(this.parse(input.substring(5, input.length - 1)))
             }
+            // // return new Operation("sqrt", this.parse(input.substring(4, input.length)))
+            // if (this.operator_set.has(input[i])) {
+            //     return new Operation("sqrt", this.parse(input.substring(4, input.length)))
+            // } else {
+            //     // Notice that we cut off the final parentheses here
+            //     return new Operation("sqrt", new Operation(parseInt(input.substring(i, input.length - 1)), null, null))
+            // }
 
         } else if (input !== "") {
             return new Operation(parseInt(input), null, null)
