@@ -62,8 +62,8 @@ function return_list_recur(node) {
               x0: 0,
               y0: i,
               r: 1,
-              x_int: i,
-              y_int: 0,
+              x_int: 0,
+              y_int: i,
               amount_to_draw: amount_to_draw_init
             }]))
         }
@@ -74,8 +74,8 @@ function return_list_recur(node) {
             x0: 0,
             y0: 0,
             r: node.operator,
-            x_int: node.operator,
-            y_int: 0,
+            x_int: 0,
+            y_int: node.operator,
             amount_to_draw: amount_to_draw_init
           }])
         return new Evaluation(node.operator, circlesList)
