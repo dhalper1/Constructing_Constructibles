@@ -214,19 +214,19 @@ function draw_entire_scene() {
   line(trans_x(0), 0, trans_x(0), height)     // y axis
 
   for (i = 0; i < current_step; i++) {
-    step = steps[i]
+    step = steps[i];
     if (step.type == CIRCLE) {
-      noFill()
-      stroke(130, 240, 180)
+      noFill();
+      stroke(130, 240, 180);
       ellipse(trans_x(step.x0), trans_y(step.y0),
                   x_scale * step.r * 2, y_scale * step.r * 2)
     } else {
-      stroke(130, 240, 180)
+      stroke(130, 240, 180);
       line(0, trans_y(step.m * inv_trans_x(0) + step.b),
             width, trans_y(step.m * inv_trans_x(width) + step.b))
     }
-    fill(240, 20, 40)
-    noStroke()
+    fill(240, 20, 40);
+    noStroke();
     ellipse(trans_x(step.x_int), trans_y(step.y_int),
               intersection_size, intersection_size)
   }
