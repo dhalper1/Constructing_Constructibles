@@ -25,14 +25,50 @@ const fade_speed = 10
 
 const default_skin = {
   bg_color: "#122042",
-  line_color: "rgba(23, 255, 202, ",
-  line_color_hex: "#17ffca",
-  final_point_color: "#D8657E",
+  line_color: "rgba(233, 92, 118, ",
+  line_color_hex: "#e95c76",
+  final_point_color: "#3ac1c9",
   intersect_color: "#B4F5FF",
   axes_color: "#48ACF0",
   origin_color: "#9EE493",
-  // navbar_color: "#699edd"
-  navbar_color: "#7acee0"
+  navbar_color: "#7acee0",
+  skin_button_color: "#224290"
+}
+
+const watermelon = {
+  bg_color: "#074b25",
+  line_color: "rgba(235, 115, 150, ",
+  line_color_hex: "#eb7396",
+  final_point_color: "#be0d41",
+  intersect_color: "#8CB369",
+  axes_color: "#F08286",
+  origin_color: "#57A97A",
+  navbar_color: "#CC7991",
+  skin_button_color: "#08823e"
+}
+
+const underwater = {
+  bg_color: "#061436",
+  line_color: "rgba(30, 131, 213, ",
+  line_color_hex: "#1e83d5",
+  final_point_color: "#db4f8a",
+  intersect_color: "#3E92CC",
+  axes_color: "#83DFDD",
+  origin_color: "#f26e7e",
+  navbar_color: "#44e7d6",
+  skin_button_color: "#0b3086"
+}
+
+const underwatermelon = {
+  bg_color: "#061436",
+  line_color: "rgba(235, 115, 150, ",
+  line_color_hex: "#eb7396",
+  final_point_color: "#63db4f",
+  intersect_color: "#8CB369",
+  axes_color: "#83DFDD",
+  origin_color: "#57A97A",
+  navbar_color: "#146f25",
+  skin_button_color: "#0d2f80"
 }
 
 /******************************************************************************/
@@ -240,11 +276,22 @@ function on_skin_change(skin_id) {
     case "default_skin":
       skin = default_skin
       break
+    case "watermelon":
+      skin = watermelon
+      break
+    case "underwater":
+      skin = underwater
+      break
+    case "underwatermelon":
+      skin = underwatermelon
+      break
     default:
       skin = default_skin
   }
   document.getElementById("nav").style.backgroundColor = skin.navbar_color
   document.getElementById("p5-container").style.backgroundColor = skin.bg_color
+  document.getElementById("skin_button").style.backgroundColor = skin.skin_button_color
+  draw_entire_scene()
 }
 
 /******************************************************************************/

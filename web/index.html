@@ -10,6 +10,7 @@
   <script src="coordinate_transform.js"></script>
   <script src="renderer.js"></script>
   <script src="searchbar_handler.js"></script>
+  <script src="dropdown_handler.js"></script>
   <script src="constructible_parse_tree.js"></script>
   <script src="alg_to_geo.js"></script>
   <script src="test_resources.js"></script>
@@ -21,10 +22,17 @@
 <body>
   <div class="flex-container">
     <div class="entry-text" id="nav" style="float:left">
-          <label for="fname">Enter A Constructible Number</label>
-          <input type="text" id="searchbar"
-            onfocus="inputFocus(this)" onblur="inputBlur(this)" placeholder="i.e. (+ 3 sqrt(2))">
-          <a href="info.html">About</a>
+        <button onclick="dropdown()" class="dropbtn" id="skin_button">Skin</button>
+        <div id="skin_dropdown" class="dropdown-content">
+          <a onclick="on_skin_change('default_skin')" id="default">Default</a>
+          <a onclick="on_skin_change('watermelon')" id="watermelon">Watermelon</a>
+          <a onclick="on_skin_change('underwater')" id="underwater">Underwater</a>
+          <a onclick="on_skin_change('underwatermelon')" id="underwatermelon">Underwatermelon</a>
+        </div>
+      <label for="fname">Enter A Constructible Number</label>
+      <input type="text" id="searchbar"
+        onfocus="inputFocus(this)" onblur="inputBlur(this)" placeholder="i.e. (+ 3 sqrt(2))">
+      <a href="info.html" style="float:right;margin-right:5%;margin-top:19px;">About</a>
     </div>
     <div id="p5-container"></div>
   </div>
