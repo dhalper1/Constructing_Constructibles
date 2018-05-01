@@ -64,11 +64,14 @@ class Tree {
                 i++
             }
             if (this.operator_set.has(input[i])) {
-                return new Operation("sqrt", new Operation(this.parse(input.substring(4, input.length))))
+                // return new Operation("sqrt", new Operation(this.parse(input.substring(4, input.length))))
+                return new Operation("sqrt", this.parse(input.substring(4, input.length)))
             } else {
                 // Notice that we cut off the final parentheses here
                 return new Operation("sqrt", new Operation(parseInt(input.substring(i, input.length - 1)), null, null))
             }
+            // if ()
+            // return new Operation("sqrt", this.parse(input.substring(4, input.length)))
 
         } else if (input !== "") {
             return new Operation(parseInt(input), null, null)
