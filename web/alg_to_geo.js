@@ -2,7 +2,7 @@
 /****************************** GLOBAL PARAMETERS *****************************/
 /******************************************************************************/
 
-// construct_ints = false
+construct_ints = false
 
 /******************************************************************************/
 /**************************** END GLOBAL PARAMETERS ***************************/
@@ -55,7 +55,7 @@ function return_list_recur(node) {
         let circlesList = []
         var i
         for (i = 0; i < node.operator; i++) {
-          circlesList = (circlesList.append(
+          circlesList = (circlesList.concat(
             [
             {
               type: CIRCLE,
@@ -67,7 +67,7 @@ function return_list_recur(node) {
               amount_to_draw: amount_to_draw_init
             }]))
         }
-        circlesList.append(
+        circlesList.concat(
           [
           {
             type: CIRCLE,
