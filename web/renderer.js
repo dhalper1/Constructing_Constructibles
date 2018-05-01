@@ -31,7 +31,8 @@ const default_skin = {
   intersect_color: "#B4F5FF",
   axes_color: "#48ACF0",
   origin_color: "#9EE493",
-  navbar_color: "#699edd"
+  // navbar_color: "#699edd"
+  navbar_color: "#7acee0"
 }
 
 /******************************************************************************/
