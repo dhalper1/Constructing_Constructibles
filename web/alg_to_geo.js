@@ -230,9 +230,9 @@ function divEvals(evalA, evalB) {
         {
           type: LINE,
           m: 0,
-          b: evalA.num,
-          x_int: (evalA.num / evalB.num),
-          y_int: evalA.num,
+          b: evalB.num,
+          x_int: (evalA.num),
+          y_int: evalB.num,
           amount_to_draw: amount_to_draw_init
         },
         {
