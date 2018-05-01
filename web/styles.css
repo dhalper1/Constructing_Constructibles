@@ -64,6 +64,24 @@ a:hover {
 }
 
 /* Dropdown Button */
+.intbtn {
+    background-color: #3498DB;
+    color: white;
+    padding: 15px 20px;
+    float:left;
+    margin-left: 2%;
+    margin-top: 10px;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.intbtn:hover, .intbtn:focus {
+    background-color: #2980B9;
+}
+
+/* Dropdown Button */
 .dropbtn {
     background-color: #3498DB;
     color: white;

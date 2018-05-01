@@ -291,6 +291,7 @@ function on_skin_change(skin_id) {
   document.getElementById("nav").style.backgroundColor = skin.navbar_color
   document.getElementById("p5-container").style.backgroundColor = skin.bg_color
   document.getElementById("skin_button").style.backgroundColor = skin.skin_button_color
+  document.getElementById("construct_ints").style.backgroundColor = skin.skin_button_color
   draw_entire_scene()
 }
 
