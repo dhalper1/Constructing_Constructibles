@@ -20,6 +20,27 @@ const fade_speed = 10
 
 
 /******************************************************************************/
+/*********************************** SKINS ************************************/
+/******************************************************************************/
+
+const default_skin = {
+  bg_color: "#122042",
+  line_color: "rgba(23, 255, 202, ",
+  line_color_hex: "#17ffca",
+  final_point_color: "#D8657E",
+  intersect_color: "#B4F5FF",
+  axes_color: "#48ACF0",
+  origin_color: "#9EE493",
+  navbar_color: "#699edd"
+}
+
+/******************************************************************************/
+/********************************* END SKINS **********************************/
+/******************************************************************************/
+
+
+
+/******************************************************************************/
 /******************************* GLOBAL STATE *********************************/
 /******************************************************************************/
 
@@ -28,6 +49,7 @@ redraw = false          // whether or not to redraw on this frame
 draw_speed = 0.02       // how fast to draw
 steps = []              // array of geometric steps
 cons_ints = false       // whether or not to draw the circles to make integers
+skin = default_skin     // skin to use for rendering
 
 /******************************************************************************/
 /***************************** END GLOBAL STATE *******************************/
@@ -52,6 +74,9 @@ function setup() {
   strokeWeight(2)
   noFill()
 
+  // Set up the initial skin
+  on_skin_change("default_skin")
+
   // Draw our initial coordinate axes.
   draw_entire_scene()
 }
@@ -71,26 +96,26 @@ function draw() {
   if (current_step < steps.length) {
     if (steps[current_step].type == CIRCLE) {
       noFill()
-      stroke(121, 182, 212)
+      stroke(skin.line_color_hex)
       arc(trans_x(steps[current_step].x0), trans_y(steps[current_step].y0),
                   x_scale * steps[current_step].r * 2,
                   y_scale * steps[current_step].r * 2,
                   0, steps[current_step].amount_to_draw * 2 * PI)
     } else if (steps[current_step].type == LINE) {
-      stroke(121, 182, 212)
+      stroke(skin.line_color_hex)
       line(0, trans_y(steps[current_step].m * inv_trans_x(0) + steps[current_step].b),
             width * steps[current_step].amount_to_draw,
             trans_y(steps[current_step].m
                       * inv_trans_x(width * steps[current_step].amount_to_draw)
                       + steps[current_step].b))
     } else if (steps[current_step].type == POINT) {
-      stroke(121, 182, 212)
-      fill(121, 182, 212)
+      stroke(skin.line_color_hex)
+      fill(skin.line_color_hex)
       arc(trans_x(steps[current_step].x), trans_y(steps[current_step].y),
                   point_size, point_size,
                   0, steps[current_step].amount_to_draw * 2 * PI)
     } else if(steps[current_step].type == VLINE) {
-      stroke(121, 182, 212)
+      stroke(skin.line_color_hex)
       line(trans_x(steps[current_step].x), 0, trans_x(steps[current_step].x),
         height * steps[current_step].amount_to_draw)
     }
@@ -106,10 +131,10 @@ function draw() {
 
 function draw_entire_scene() {
   // redraw the background
-  background(60, 60, 80)
+  background(skin.bg_color)
 
   // draw the axes
-  stroke(200, 200, 250)
+  stroke(skin.axes_color)
   line(0, trans_y(0), width, trans_y(0))      // x axis
   line(trans_x(0), 0, trans_x(0), height)     // y axis
 
@@ -120,39 +145,39 @@ function draw_entire_scene() {
     alpha = fade_speed/(time_on_canvas + fade_speed - 1)
     if (step.type == CIRCLE) {
       noFill()
-      stroke('rgba(121, 182, 212, ' + alpha + ')')
+      stroke(skin.line_color + alpha + ')')
       ellipse(trans_x(step.x0), trans_y(step.y0),
                   x_scale * step.r * 2, y_scale * step.r * 2)
     } else if (step.type == LINE) {
-      stroke('rgba(121, 182, 212, ' + alpha + ')')
+      stroke(skin.line_color + alpha + ')')
       line(0, trans_y(step.m * inv_trans_x(0) + step.b),
             width, trans_y(step.m * inv_trans_x(width) + step.b))
     } else if (step.type == POINT) {
-      stroke('rgba(121, 182, 212, ' + alpha + ')')
-      fill('rgba(121, 182, 212, ' + alpha + ')')
+      stroke(skin.line_color + alpha + ')')
+      fill(skin.line_color + alpha + ')')
       ellipse(trans_x(step.x), trans_y(step.y),
                   point_size, point_size)
     } else if (step.type == VLINE) {
-      stroke('rgba(121, 182, 212, ' + alpha + ')')
+      stroke(skin.line_color + alpha + ')')
       line(trans_x(step.x), 0, trans_x(step.x), height)
     }
   }
 
   // draw the origin and the point (1, 0)
   noStroke()
-  fill(250, 70, 250)
+  fill(skin.origin_color)
   ellipse(trans_x(0), trans_y(0), point_size, point_size)
   ellipse(trans_x(1), trans_y(0), point_size, point_size)
 
   // draw the intersections on top
   for (i = 0; i < current_step; i++) {
-    fill(91, 255, 146)
+    fill(skin.intersect_color)
     noStroke()
     step = steps[i]
     ellipse(trans_x(step.x_int), trans_y(step.y_int),
               intersection_size, intersection_size)
     if (i == steps.length - 1) {
-      fill(240, 64, 111)
+      fill(skin.final_point_color)
       noStroke()
       ellipse(trans_x(step.x_int), trans_y(step.y_int),
                 final_point_size, final_point_size)
@@ -207,6 +232,18 @@ function mouseWheel(event) {
   y_scale = max(event.delta + y_scale, 0.01)
   draw_entire_scene()
   loop()
+}
+
+function on_skin_change(skin_id) {
+  switch(skin_id) {
+    case "default_skin":
+      skin = default_skin
+      break
+    default:
+      skin = default_skin
+  }
+  document.getElementById("nav").style.backgroundColor = skin.navbar_color
+  document.getElementById("p5-container").style.backgroundColor = skin.bg_color
 }
 
 /******************************************************************************/
