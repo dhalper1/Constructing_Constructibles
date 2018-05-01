@@ -52,10 +52,43 @@ function return_list(tree) {
 function return_list_recur(node) {
   if (node.is_leaf) {
     if (construct_ints) {
-      if (contains_inexact) {}
-      // construct the integer
+        let circlesList = []
+        var i
+        for (i = 0; i < node.operator; i++) {
+          circlesList = (circlesList.append(
+            [
+            {
+              type: CIRCLE,
+              x0: 0,
+              y0: i,
+              r: 1,
+              x_int: i,
+              y_int: 0,
+              amount_to_draw: amount_to_draw_init
+            }]))
+        }
+        circlesList.append(
+          [
+          {
+            type: CIRCLE,
+            x0: 0,
+            y0: 0,
+            r: node.operator,
+            x_int: node.operator,
+            y_int: 0,
+            amount_to_draw: amount_to_draw_init
+          }])
+        return new Evaluation(node.operator, circlesList)
     } else {
-      return new Evaluation(node.operator, [])
+      return new Evaluation(node.operator, [{
+            type: CIRCLE,
+            x0: 0,
+            y0: 0,
+            r: node.operator,
+            x_int: node.operator,
+            y_int: 0,
+            amount_to_draw: amount_to_draw_init
+          }])
     }
   } else {
     let leftEval = return_list_recur(node.l_child)
