@@ -10,7 +10,7 @@ class Operation {
 class Tree {
     constructor(input) {
         this.operator_set = new Set(["+", "-", "*", "/"]);
-        this.number_set = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"])
+        // this.number_set = new Set(["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]);
         this.root = this.is_valid(input) ? this.parse(input) : null
     }
 
@@ -21,10 +21,12 @@ class Tree {
      * @returns {*[]} - A tuple the substring and the returning index
      */
     _find_substring(str, start) {
-        let i = start;
         while (str[start] === " ") {
             start += 1
         }
+        let i = start;
+        // console.log(str)
+        // console.log(start)
         if ((str[start] === "(") || (str.substring(start, str.length).startsWith("sqrt"))) {
             let counter = 0;
             while (str[i] !== ")") {
@@ -35,10 +37,14 @@ class Tree {
                 counter -= str[i] === ")" ? 1 : 0;
                 i += 1
             }
-        } else {
+        // } else if (this.number_set.has(str[start])) {
+
+        }
+        else {
             while (str[i] !== " " && str[i] !== ")" && !this.operator_set.has(str[i]) && i < str.length) {
                 i++
             }
+            // console.log(i)
         }
         return [str.substring(start, i), i + 1]
     }
@@ -55,13 +61,18 @@ class Tree {
             const left_to_parse = left_sub[0];
             let i = left_sub[1];
             // Retrieving the next letter.  Should be an operator
+            console.log(i)
             while (input[i] === " ") {
                 i++
             }
+            console.log(i)
             let operator = input[i];
             i++;
             const right_sub = this._find_substring(input, i);
             const right_to_parse = right_sub[0];
+            console.log(left_sub)
+            console.log(operator)
+            console.log(right_sub)
 
             return new Operation(operator, this.parse(left_to_parse), this.parse(right_to_parse))
 
@@ -72,10 +83,10 @@ class Tree {
             }
             if (i < input.length) {
                 // It's another operation
-                return new Operation(this.parse(input.substring(4, input.length)))
+                return new Operation("sqrt", this.parse(input.substring(4, input.length)))
             } else {
                 // It's a number.  Get rid of final parentheses
-                return new Operation(this.parse(input.substring(5, input.length - 1)))
+                return new Operation("sqrt", this.parse(input.substring(5, input.length - 1)))
             }
             // // return new Operation("sqrt", this.parse(input.substring(4, input.length)))
             // if (this.operator_set.has(input[i])) {
