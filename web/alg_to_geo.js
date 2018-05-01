@@ -277,8 +277,8 @@ function sqrtEval(evaluat) {
           x0: 0,
           y0: 0,
           r: evaluat.num,
-          x_int: evaluat.num,
-          y_int: 0,
+          x_int: 0,
+          y_int: evaluat.num,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -307,36 +307,10 @@ function sqrtEval(evaluat) {
         },
         {
           type: LINE,
-          m: 0,
-          b: (evaluat.num + 1),
-          x_int: ((evaluat.num + 1) / 2),
-          y_int: (evaluat.num + 1),
-          amount_to_draw: amount_to_draw_init
-        },
-        {
-          type: LINE,
           m: (2 / (evaluat.num + 1)),
           b: 0,
           x_int: ((evaluat.num + 1) / 2),
-          y_int: (evaluat.num + 1),
-          amount_to_draw: amount_to_draw_init
-        },
-        // {
-        //   type: CIRCLE,
-        //   x0: ((evaluat.num + 1) / 2),
-        //   y0: (evaluat.num + 1),
-        //   r: (evaluat.num + 1),
-        //   x_int: ((evaluat.num + 1) / 2),
-        //   y_int: 0,
-        //   amount_to_draw: amount_to_draw_init
-        // },
-        {
-          type: CIRCLE,
-          x0: 0,
-          y0: 0,
-          r: ((evaluat.num + 1) / 2),
-          x_int: 0,
-          y_int: 0,
+          y_int: 1,
           amount_to_draw: amount_to_draw_init
         },
         {
@@ -345,6 +319,22 @@ function sqrtEval(evaluat) {
           b: 1,
           x_int: Math.sqrt(evaluat.num),
           y_int: 1,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: VLINE,
+          x: ((evaluat.num + 1) / 2),
+          x_int: ((evaluat.num + 1) / 2),
+          y_int: 0,
+          amount_to_draw: amount_to_draw_init
+        },
+        {
+          type: CIRCLE,
+          x0: 0,
+          y0: 0,
+          r: ((evaluat.num + 1) / 2),
+          x_int: 0,
+          y_int: ((evaluat.num + 1) / 2),
           amount_to_draw: amount_to_draw_init
         },
         {
