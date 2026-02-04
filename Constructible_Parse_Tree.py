@@ -1,5 +1,5 @@
 input_val = " (+ 2 (/ 1 sqrt(3)))"
-butts = "david_test yo"
+
 
 class Leaf:
     def __init__(self, num):
@@ -11,7 +11,7 @@ class Leaf:
 
 class Operation:
     def __init__(self, operator, l_child, r_child=None):
-        self.operator = operator  ## String representing the operator
+        self.operator = operator  # String representing the operator
         self.l_child = l_child
         self.r_child = r_child
 
@@ -89,7 +89,8 @@ def is_valid(input_val):
 #             last_space = True
 
 def check_legal_characters(input_val):
-    legal_set = ["+", "-", "*", "/", "(", " ", ")", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
+    legal_set = ["+", "-", "*", "/",
+                 "(", " ", ")", "0", "1", "2", "3", "4", "5", "6", "7", "8", "9"]
     # i = 0
     for i in range(len(input_val)):
         char = input_val[i]
